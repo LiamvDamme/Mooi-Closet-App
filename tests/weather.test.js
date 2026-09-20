@@ -1,0 +1,5 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {createWeather} from '../weather.js';
+test('weather resolves South African city and caches real numeric data',async()=>{let calls=0;const lookup=createWeather(async url=>{calls++;return Response.json(url.includes('geocoding')?{results:[{name:'Cape Town',country_code:'ZA',latitude:-33.9,longitude:18.4}]}:{current:{temperature_2m:20,apparent_temperature:19,weather_code:2,wind_speed_10m:13,time:'2026-09-18T14:00'},daily:{temperature_2m_max:[23],temperature_2m_min:[14],precipitation_probability_max:[5]}});});const w=await lookup('Cape Town');assert.equal(w.temperature,20);assert.equal(w.high,23);assert.equal((await lookup('cape town')).city,'Cape Town');assert.equal(calls,2);});
+test('weather does not invent a forecast for missing cities or failed requests',async()=>{await assert.rejects(createWeather(async()=>Response.json({results:[]}))('Unknown'),/City not found/);await assert.rejects(createWeather(async()=>{throw Error('offline');})('Durban'),/temporarily unavailable/);});
