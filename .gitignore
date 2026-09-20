@@ -1,0 +1,6 @@
+.env
+.closet-data/
+node_modules/
+.video-tools/
+video-review/
+test-results/

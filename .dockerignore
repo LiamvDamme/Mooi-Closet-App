@@ -1,0 +1,11 @@
+*
+!Dockerfile
+!package.json
+!*.js
+!*.css
+!*.html
+!manifest.webmanifest
+!assets/
+!assets/**
+test*
+*-legacy-*
