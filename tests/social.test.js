@@ -14,7 +14,7 @@ test('friend acceptance gates posts; snapshot contains only shared pieces; remov
  assert.equal((await call(a.cookie,'social/share',{id:'look1'})).status,400);
  assert.equal((await call(a.cookie,'social/share',{id:'look1',confirm:true})).status,200);
  assert.equal((await call(b.cookie,'social/feed')).data.posts.length,0);
- const bFeed=await call(b.cookie,'social/feed');await call(a.cookie,'social/request',{code:bFeed.data.code});
+ const bFeed=await call(b.cookie,'social/feed');await call(a.cookie,'social/request',{username:bFeed.data.username});
  assert.equal((await call(b.cookie,'social/feed')).data.posts.length,0);
  const request=(await call(b.cookie,'social/feed')).data.incoming[0];assert.equal((await call(c.cookie,'social/respond',{id:request.id,accept:true})).status,404);await call(b.cookie,'social/respond',{id:request.id,accept:true});
  const visible=(await call(b.cookie,'social/feed')).data;assert.equal(visible.posts.length,1);const p=visible.posts[0];assert.equal(p.pieces.length,1);assert.equal(p.pieces[0].name,'Ivory shirt');assert.equal(p.pieces[0].size,undefined);assert.equal(p.author.email,undefined);assert.ok(!JSON.stringify(visible).includes('private-fit'));assert.equal((await call(c.cookie,'social/feed')).data.posts.length,0);
