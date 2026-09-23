@@ -1,20 +1,20 @@
-import {randomBytes,randomUUID} from 'node:crypto';
+import {randomUUID} from 'node:crypto';
 import {retailers} from './shared.js';
 const fail=(status,message)=>Object.assign(Error(message),{status});
 const clean=s=>String(s||'').trim();
 export function socialRoutes(db,save){
  db.friendships??=[];db.posts??=[];
- function code(u){if(!u.friendCode){u.friendCode=randomBytes(7).toString('hex').toUpperCase();save();}return u.friendCode;}
- const person=id=>{const u=db.users.find(u=>u.id===id);return {id,name:u?.state.profile.name||'Closet member'};};
+ const person=id=>{const u=db.users.find(u=>u.id===id);return {id,username:u?.username||'',name:u?.state.profile.name||'Closet member'};};
  const friendship=(a,b)=>db.friendships.find(f=>[f.from,f.to].includes(a)&&[f.from,f.to].includes(b));
  const visible=(p,u)=>p.author===u.id||friendship(p.author,u.id)?.status==='accepted';
  const postView=p=>({...p,author:person(p.author)});
  return async(route,req,user,body)=>{
   if(!route.startsWith('/api/social/'))return null;
-  if(route==='/api/social/feed'&&req.method==='GET')return {code:code(user),friends:db.friendships.filter(f=>f.status==='accepted'&&[f.from,f.to].includes(user.id)).map(f=>person(f.from===user.id?f.to:f.from)),incoming:db.friendships.filter(f=>f.to===user.id&&f.status==='pending').map(f=>({id:f.id,person:person(f.from)})),outgoing:db.friendships.filter(f=>f.from===user.id&&f.status==='pending').map(f=>({id:f.id,person:person(f.to)})),posts:db.posts.filter(p=>visible(p,user)).sort((a,b)=>b.created-a.created).slice(0,100).map(postView)};
+  if(route==='/api/social/feed'&&req.method==='GET')return {username:user.username,friends:db.friendships.filter(f=>f.status==='accepted'&&[f.from,f.to].includes(user.id)).map(f=>person(f.from===user.id?f.to:f.from)),incoming:db.friendships.filter(f=>f.to===user.id&&f.status==='pending').map(f=>({id:f.id,person:person(f.from)})),outgoing:db.friendships.filter(f=>f.from===user.id&&f.status==='pending').map(f=>({id:f.id,person:person(f.to)})),posts:db.posts.filter(p=>visible(p,user)).sort((a,b)=>b.created-a.created).slice(0,100).map(postView)};
+  if(route==='/api/social/search'&&req.method==='GET'){const q=clean(new URL(req.url,'http://localhost').searchParams.get('q')).replace(/^@/,'').toLowerCase().slice(0,60);if(q.length<2)return {people:[]};return {people:db.users.filter(u=>u.id!==user.id&&(u.username.includes(q)||u.state.profile.name.toLowerCase().includes(q))).slice(0,20).map(u=>({...person(u.id),relationship:friendship(user.id,u.id)?.status||''}))};}
   if(req.method!=='POST')throw fail(405,'This action is not supported.');
   const data=await body(req);
-  if(route==='/api/social/request'){const other=db.users.find(u=>u.friendCode===clean(data.code).toUpperCase());if(!other||other.id===user.id)throw fail(400,'Check the friend code. Ask your friend to open Friends on this installation to get their code.');if(friendship(user.id,other.id))throw fail(409,'You already have a friendship or request with this person.');db.friendships.push({id:randomUUID(),from:user.id,to:other.id,status:'pending',created:Date.now()});}
+  if(route==='/api/social/request'){const other=db.users.find(u=>u.id===data.id||u.username===clean(data.username).replace(/^@/,'').toLowerCase());if(!other||other.id===user.id)throw fail(400,'Choose a person from the name or username search.');if(friendship(user.id,other.id))throw fail(409,'You already have a friendship or request with this person.');db.friendships.push({id:randomUUID(),from:user.id,to:other.id,status:'pending',created:Date.now()});}
   else if(route==='/api/social/respond'){const f=db.friendships.find(f=>f.id===data.id&&f.to===user.id&&f.status==='pending');if(!f)throw fail(404,'Request not found.');if(data.accept===true)f.status='accepted';else db.friendships=db.friendships.filter(x=>x!==f);}
   else if(route==='/api/social/remove'){db.friendships=db.friendships.filter(f=>!([f.from,f.to].includes(user.id)&&[f.from,f.to].includes(data.id)));}
   else if(route==='/api/social/unshare'){const p=db.posts.find(p=>p.id===data.id&&p.author===user.id);if(!p)throw fail(404,'Shared outfit not found.');db.posts=db.posts.filter(x=>x!==p);}

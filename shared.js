@@ -10,6 +10,7 @@ const img=v=>typeof v==='string'&&v.length<12_000_000&&/^data:image\/(jpeg|png|w
 export function pinterestUrl(s){if(!s)return '';try{const u=new URL(s);if(u.protocol!=='https:')return '';const h=u.hostname.toLowerCase();return h==='pin.it'||h==='pinterest.com'||h.endsWith('.pinterest.com')?u.href:'';}catch{return '';}}
 export function validateState(raw){
  if(!raw||!Array.isArray(raw.items)||raw.items.length>500)throw Object.assign(Error('This is not a supported wardrobe backup.'),{status:400});const clean=blankState(),ids=new Set();
+ clean.tutorialComplete=raw.tutorialComplete===true;
  clean.stylistFeedback=(raw.stylistFeedback||[]).slice(-40).filter(x=>x&&typeof x.reason==='string').map(x=>({reason:text(x.reason,100),note:text(x.note,300),context:text(x.context,1200),outfit:text(x.outfit,100),created:Number(x.created)||Date.now()}));
  clean.profile={...clean.profile,...Object.fromEntries(Object.keys(clean.profile).filter(k=>k!=='styles').map(k=>[k,text(raw.profile?.[k],80)])),styles:Array.isArray(raw.profile?.styles)?raw.profile.styles.map(s=>text(s,40)).slice(0,12):[]};
  if(!['Female','Male','Unspecified',''].includes(clean.profile.gender))clean.profile.gender='Unspecified';
