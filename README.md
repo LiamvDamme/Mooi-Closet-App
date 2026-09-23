@@ -1,5 +1,15 @@
 # MOOI — Jou klerekas. Jou styl. Jou Mooi.
 
+## Version 8
+
+New signup continues from the private recovery-code screen into a three-slide app tutorial, followed by optional style questions. Replay the tutorial from Profile. Overview shortcuts have moved into that tour. Saved-item controls use custom outline SVG hearts.
+
+Every account has a unique, case-insensitive username. Existing accounts receive an available handle based on their display name, and can change it in Profile. Friends search names or usernames; search results never include emails, wardrobe contents or personal photos. Accepted friendships still control outfit visibility.
+
+Weather includes a browser-side Open-Meteo fallback when the hosting server cannot reach the provider, and known South African city centres if geocoding is unavailable. Outfit styling continues with an explicit weather-unavailable notice when needed. Generated JPEGs reduce storage size; provider errors distinguish access, credits and rate limits, and failed render status persists in PostgreSQL. API credentials remain server-only.
+
+Sixteen automated checks cover account persistence, signup, usernames, social privacy, repeated generation, photo references, weather failure and existing calendar features. AI integration tests use a simulated provider; live AI depends on the connected account’s available quota.
+
 ## Version 7
 
 Wardrobe is the main collection area with Wardrobe, Outfits and Wishlist tabs. Add and filter pieces there. Insights contains weather and wardrobe statistics. Calendar and Packing lists share a tab bar. The introduction and login use the transparent updated logo. The app also opens at `/jou-mooi`.
