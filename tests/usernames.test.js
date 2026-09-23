@@ -26,3 +26,7 @@ test('username uniqueness, search privacy and friend requests work end to end',a
  assert.equal((await call('social/feed',undefined,b.cookie)).data.incoming[0].person.username,'melissacolin');
  }finally{await new Promise(r=>app.close(r));rmSync(dir,{recursive:true,force:true});}
 });
+test('exhausted AI credits are explained without exposing the API key',async()=>{
+ const dir=mkdtempSync(path.join(tmpdir(),'mooi-credits-')),app=createApp({dataDir:dir,apiKey:'private-test-key',fetch:async()=>Response.json({error:{code:'credit_balance_exhausted'}},{status:429})});await new Promise(r=>app.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+app.address().port;
+ try{const signup=await fetch(base+'/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:'credits@example.com',password:'test-password-long',name:'Credit test',gender:'Female'})});const cookie=signup.headers.get('set-cookie').split(';')[0];const r=await fetch(base+'/api/tag-item',{method:'POST',headers:{'Content-Type':'application/json',cookie},body:JSON.stringify({imageData:'data:image/png;base64,YQ=='})});assert.equal(r.status,503);const result=await r.json();assert.match(result.error,/AI credits are unavailable/);assert.ok(!JSON.stringify(result).includes('private-test-key'));}finally{await new Promise(r=>app.close(r));rmSync(dir,{recursive:true,force:true});}
+});
