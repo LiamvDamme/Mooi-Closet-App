@@ -1,3 +1,18 @@
+# MOOI — Jou klerekas. Jou styl. Jou Mooi.
+
+## Version 7
+
+Wardrobe is the main collection area with Wardrobe, Outfits and Wishlist tabs. Add and filter pieces there. Insights contains weather and wardrobe statistics. Calendar and Packing lists share a tab bar. The introduction and login use the transparent updated logo. The app also opens at `/jou-mooi`.
+
+Hosted accounts use PostgreSQL when `DATABASE_URL` is set privately on the server. Passwords remain scrypt-hashed, session tokens are hashed, and each API response waits for its database transaction to commit. Local testing still uses the local JSON store if no database is configured. Accounts from a previous local or expired temporary installation are not automatically present in the new database; create a hosted account and import an exported wardrobe backup if needed.
+
+This is a small pilot: the PostgreSQL adapter stores the collection in one transactional JSONB record and serialises account API requests, so long AI requests can delay other account requests. Static pages, health checks and weather remain available. Split storage by account and move garment photos to object storage before scaling. Free Render PostgreSQL expires on October 23, 2026; migrate or upgrade before that date. Free database backups must be arranged separately.
+
+AI credentials belong only in Render's environment settings (`OPENAI_API_KEY`), never in browser code or this repository. Run `npm install` if using PostgreSQL outside Docker; Docker installs its locked dependencies automatically. Run `node --test --test-isolation=none tests/*.test.js` for checks.
+
+The standalone marketing website ZIP includes an interactive overview phone demo with in-memory guest state. It contains no accounts or secrets and does not call the paid AI service. Host the extracted folder on a static host to use the module-based demo.
+
+## Earlier release notes
 # MOOI
 
 ## Version 6 — private phone-testing build
