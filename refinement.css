@@ -19,3 +19,7 @@
 
 /* Script identity, used only in the welcome animation and signed-in shell. */
 .brand-logo-window{width:128px;height:72px;overflow:visible}.brand-logo-window img{position:static;width:128px;height:72px;max-width:100%;object-fit:contain}.intro-logo{filter:none;width:min(380px,78vw);height:auto;max-height:34vh;object-fit:contain}.auth-story{justify-content:flex-end}@media(max-width:600px){.brand-logo-window{width:112px;height:64px}.brand-logo-window img{width:112px;height:64px}.topbar-left{max-width:112px}.intro-logo{width:min(340px,82vw)}}
+
+/* White logo over the opening photograph. */
+.welcome-intro .intro-logo{filter:brightness(0) invert(1);opacity:1}
+
