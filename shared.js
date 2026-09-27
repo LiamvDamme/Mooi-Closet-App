@@ -1,5 +1,6 @@
 export const categories={top:'Tops',bottom:'Bottoms',outer:'Layers',shoe:'Shoes',dress:'Dresses',bag:'Bags',jewellery:'Jewellery',belt:'Belts',hat:'Hats',eyewear:'Eyewear',scarf:'Scarves',hosiery:'Socks & tights',accessory:'Other accessories'};
 export const accessoryCategories=['bag','jewellery','belt','hat','eyewear','scarf','hosiery','accessory'];
+export const stylingTypes=['Any clothing','Jeans','Skirt','Shirt','T-shirt','Trousers','Shorts','Dress','Jumpsuit','Knitwear','Jacket','Coat','Shoes','Bag','Accessories'];
 export const colours={White:'#eeeae0',Black:'#30312f',Beige:'#c9baa0',Indigo:'#3a4b59',Denim:'#728692',Tan:'#b69a75',Navy:'#37424d',Charcoal:'#545650',Olive:'#747b5b',Cream:'#ded7c3',Brown:'#82664d',Sage:'#a0aa8b',Rust:'#b17659',Grey:'#999992',Pink:'#d7a9b7',Red:'#b74949',Blue:'#618bac',Green:'#779a71',Yellow:'#d7bd63',Purple:'#94799f',Multicolour:'#b6a1a5'};
 // Retailer-scoped searches, not claims of current stock or exact product matches.
 export const retailers=[{name:'Woolworths',domain:'woolworths.co.za'},{name:'Mr Price',domain:'mrp.com'},{name:'Superbalist',domain:'superbalist.com'},{name:'Bash',domain:'bash.com'},{name:'Foschini',domain:'bash.com/foschini'},{name:'Truworths',domain:'truworths.co.za'},{name:'Poetry',domain:'poetrystores.co.za'},{name:'Pick n Pay Clothing',domain:'pnpclothing.co.za'}];
