@@ -100,3 +100,7 @@ On the same browser origin as the previous app, Profile & settings offers **Impo
 Use Profile & settings to export backups. Original app files are retained in `index-legacy-backup.html` and `server-legacy-backup.js` in the working folder. Do not expose this local server or its data folder to the internet; public hosting requires production authentication, HTTPS and a database.
 
 Run `npm test` (or `node --test tests/server.test.js`) for integration checks. These use a simulated AI provider; live paid AI calls require a configured key.
+
+## v9 improvements
+
+See [IMPROVEMENTS-v9.md](IMPROVEMENTS-v9.md) for free wardrobe mixes, non-blocking image requests, local photo cleaning, daily planning, polls/moderation, encrypted backups, and the remaining external-service requirements. No paid service was added. The existing temporary database remains in use at the owner's request.
