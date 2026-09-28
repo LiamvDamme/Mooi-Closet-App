@@ -24,4 +24,5 @@ test('friend acceptance gates posts; snapshot contains only shared pieces; remov
  await call(a.cookie,'social/unshare',{id:p.id});assert.equal((await call(a.cookie,'social/feed')).data.posts.length,0);
  }finally{await new Promise(r=>server.close(r));rmSync(dir,{recursive:true,force:true});}
 });
-test('wardrobe matching ranks colour and description and excludes unavailable pieces',()=>{const piece={name:'Ivory linen shirt',cat:'top',colour:'Cream'};const items=[{id:'a',name:'Black tee',cat:'top',colour:'Black'},{id:'b',name:'Linen shirt',cat:'top',colour:'Cream'},{id:'c',name:'Linen shirt',cat:'top',colour:'Cream',laundry:true},{id:'d',name:'Cream trousers',cat:'bottom',colour:'Cream'}];const found=matches(piece,items);assert.equal(found[0].item.id,'b');assert.deepEqual(found.map(x=>x.item.id),['b','a']);});
+test('wardrobe matching ranks colour and description and excludes unavailable pieces',()=>{const piece={name:'Ivory linen shirt',cat:'top',colour:'Cream'};const items=[{id:'a',name:'Black tee',cat:'top',colour:'Black'},{id:'b',name:'Linen shirt',cat:'top',colour:'Cream'},{id:'c',name:'Linen shirt',cat:'top',colour:'Cream',laundry:true},{id:'d',name:'Cream trousers',cat:'bottom',colour:'Cream'}];const found=matches(piece,items);assert.equal(found[0].item.id,'b');assert.deepEqual(found.map(x=>x.item.id),['b']);});
+
