@@ -18,9 +18,9 @@ test('friend acceptance gates posts; snapshot contains only shared pieces; remov
  assert.equal((await call(b.cookie,'social/feed')).data.posts.length,0);
  const request=(await call(b.cookie,'social/feed')).data.incoming[0];assert.equal((await call(c.cookie,'social/respond',{id:request.id,accept:true})).status,404);await call(b.cookie,'social/respond',{id:request.id,accept:true});
  const visible=(await call(b.cookie,'social/feed')).data;assert.equal(visible.posts.length,1);const p=visible.posts[0];assert.equal(p.pieces.length,1);assert.equal(p.pieces[0].name,'Ivory shirt');assert.equal(p.pieces[0].size,undefined);assert.equal(p.author.email,undefined);assert.ok(!JSON.stringify(visible).includes('private-fit'));assert.equal((await call(c.cookie,'social/feed')).data.posts.length,0);
- assert.equal((await call(b.cookie,'notifications')).data.items.filter(n=>n.kind==='friend').length,1);assert.equal((await call(c.cookie,'notifications')).data.items.length,0);
+ assert.equal((await call(b.cookie,'notifications')).data.items.filter(n=>n.kind==='friend').length,1);assert.equal((await call(c.cookie,'notifications')).data.items.filter(n=>n.id!=='founder-welcome-v1').length,0);
  assert.equal((await call(b.cookie,'social/unshare',{id:p.id})).status,404);
- await call(b.cookie,'social/remove',{id:a.data.user.id});assert.equal((await call(b.cookie,'social/feed')).data.posts.length,0);assert.equal((await call(b.cookie,'notifications')).data.items.length,0);
+ await call(b.cookie,'social/remove',{id:a.data.user.id});assert.equal((await call(b.cookie,'social/feed')).data.posts.length,0);assert.equal((await call(b.cookie,'notifications')).data.items.filter(n=>n.id!=='founder-welcome-v1').length,0);
  await call(a.cookie,'social/unshare',{id:p.id});assert.equal((await call(a.cookie,'social/feed')).data.posts.length,0);
  }finally{await new Promise(r=>server.close(r));rmSync(dir,{recursive:true,force:true});}
 });
