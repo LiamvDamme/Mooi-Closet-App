@@ -23,10 +23,10 @@ test('accounts, wardrobe isolation, repeated generation and garment-reference im
  assert.equal((await call('/api/state',undefined,'GET',{Origin:'https://evil.example'})).status,403);
  const one=await call('/api/generate-outfits',{anchorId:'real-jeans'});assert.equal(one.status,200);assert.equal(one.data.outfits.length,3);assert.ok(one.data.outfits.slice(0,2).every(o=>o.ids.includes('real-jeans')));
  const two=await call('/api/generate-outfits',{weather:'Automatic'});assert.equal(two.status,200);assert.match(two.data.weatherNotice,/unavailable/);assert.notEqual(one.data.outfits[0].name,two.data.outfits[0].name);
- const image=await call('/api/render-outfit',{id:two.data.outfits[0].id});assert.equal(image.status,200);assert.equal(references,2);assert.match(prompt,/adult female/);assert.match(prompt,/LAST reference image shows the user/);assert.match(prompt,/Heels/);assert.match(image.data.outfit.image,/^data:image/);
+ const image=await call('/api/render-outfit',{id:two.data.outfits[0].id});assert.equal(image.status,200);assert.equal(references,2);assert.match(prompt,/never a substitute model/);assert.match(prompt,/LAST reference image shows the user/);assert.match(prompt,/Heels/);assert.match(image.data.outfit.image,/^data:image/);
  const tryOn=await call('/api/render-outfit',{id:two.data.outfits[0].id,tryOn:true,regenerate:true});assert.equal(tryOn.status,200);assert.match(tryOn.data.outfit.tryOnImage,/^data:image/);assert.equal(tryOn.data.outfit.image,image.data.outfit.image);assert.equal(tryOn.data.outfit.tryOnStatus,'ready');
  const latest=await call('/api/state');latest.data.state.personal.usePhoto=false;await call('/api/state',{state:latest.data.state,revision:latest.data.revision},'PUT');
- assert.equal((await call('/api/render-outfit',{id:two.data.outfits[0].id,tryOn:true,regenerate:true})).status,400);
+ assert.equal((await call('/api/render-outfit',{id:two.data.outfits[0].id,tryOn:true,regenerate:true})).status,400);assert.equal((await call('/api/render-outfit',{id:two.data.outfits[0].id})).status,400);assert.equal((await call('/api/render-outfit',{id:two.data.outfits[0].id,regenerate:true})).status,400);
  r=await call('/api/auth/register',{email:'second@example.com',password:'a-long-test-password',gender:'Male'});cookie=r.cookie;assert.equal((await call('/api/state')).data.state.items.length,0);
  assert.equal((await call('/api/render-outfit',{id:two.data.outfits[0].id})).status,404);
  cookie=firstCookie;await call('/api/auth/logout',{});assert.equal((await call('/api/state')).status,401);
