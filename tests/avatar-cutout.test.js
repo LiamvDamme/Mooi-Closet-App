@@ -16,7 +16,7 @@ test('cleanup handles gradual lighting, preserves fabric, and a tapped backgroun
 
 test('avatar is private, consented, reused and invalidated when the signup photo changes; outfit uses avatar and original identity',async()=>{
  const dir=mkdtempSync(path.join(tmpdir(),'mooi-avatar-'));let calls=0,refs=[],prompt='';
- const server=createApp({dataDir:dir,apiKey:'test',fetch:async(url,opts)=>{calls++;refs=await Promise.all(opts.body.getAll('image[]').map(b=>b.text()));prompt=opts.body.get('prompt');return Response.json({data:[{b64_json:Buffer.from('avatar-'+calls).toString('base64')}]});}});
+ const server=createApp({dataDir:dir,apiKey:'test',fetch:async(url,opts)=>{calls++;assert.equal(opts.body.get('quality'),'low');assert.equal(opts.body.get('size'),'1024x1024');assert.equal(opts.body.get('output_format'),'jpeg');refs=await Promise.all(opts.body.getAll('image[]').map(b=>b.text()));prompt=opts.body.get('prompt');return Response.json({data:[{b64_json:Buffer.from('avatar-'+calls).toString('base64')}]});}});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));let cookie='';const base='http://127.0.0.1:'+server.address().port;
  const call=async(p,body,method='POST')=>{const r=await fetch(base+'/api/'+p,{method:body===undefined?'GET':method,headers:{cookie,'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});if(r.headers.get('set-cookie'))cookie=r.headers.get('set-cookie').split(';')[0];return {status:r.status,data:await r.json()};};
  try{
@@ -27,7 +27,7 @@ test('avatar is private, consented, reused and invalidated when the signup photo
   await call('state',{state,revision:r.data.revision},'PUT');assert.equal((await call('generate-avatar',{consent:false})).status,400);
   r=await call('generate-avatar',{consent:true});assert.equal(r.status,200);assert.deepEqual(refs,['signup-photo']);assert.match(prompt,/never a substitute model/);assert.equal(calls,1);
   assert.equal((await call('generate-avatar',{consent:true})).data.cached,true);assert.equal(calls,1);
-  r=await call('render-outfit',{id:'look'});assert.equal(r.status,200);assert.deepEqual(refs,['my-shirt','avatar-1','signup-photo']);assert.match(prompt,/second-last reference/);assert.ok(prompt.length<6000);
+  r=await call('render-outfit',{id:'look'});assert.equal(r.status,200);assert.deepEqual(refs,['my-shirt','avatar-1','signup-photo']);assert.match(prompt,/second-last reference/);assert.ok(prompt.length<6000);const paidCalls=calls;await call('render-outfit',{id:'look'});assert.equal(calls,paidCalls,'opening a completed preview must not charge for a second image');
   r=await call('state');state=r.data.state;assert.ok(state.personal.avatar);await call('state',{state,revision:r.data.revision},'PUT');assert.ok((await call('state')).data.state.personal.avatar);
   r=await call('state');state=r.data.state;state.personal.photo='data:image/png;base64,bmV3LXBob3Rv';await call('state',{state,revision:r.data.revision},'PUT');assert.ok(!(await call('state')).data.state.personal.avatar);
   await call('generate-avatar',{consent:true});assert.deepEqual(refs,['new-photo']);r=await call('state');state=r.data.state;state.personal.usePhoto=false;await call('state',{state,revision:r.data.revision},'PUT');assert.ok(!(await call('state')).data.state.personal.avatar);assert.equal((await call('generate-avatar',{consent:true})).status,400);
