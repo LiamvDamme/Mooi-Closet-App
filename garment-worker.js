@@ -1,17 +1,15 @@
 import * as ort from '/assets/ort.wasm.min.mjs';
-const modelUrl='https://huggingface.co/Ko033/isnet-general-use-onnx/resolve/5349b617911fd60c619b52f32e2b593517b78df3/onnx/model_quantized.onnx';
+const modelParts=['/assets/garment-model.onnx'];
 ort.env.wasm.numThreads=1;ort.env.wasm.proxy=false;ort.env.wasm.wasmPaths=new URL('/assets/',self.location.origin).href;
 let sessionPromise;
 async function session(id){
  if(!sessionPromise)sessionPromise=(async()=>{
-  let cache,cached;try{cache=await caches.open('mooi-garment-model-v1');cached=await cache.match(modelUrl);}catch{}
-  let bytes;if(cached)bytes=await cached.arrayBuffer();else{
-   const response=await fetch(modelUrl,{signal:AbortSignal.timeout(90000)});if(!response.ok)throw Error('Model unavailable');
-   const total=Number(response.headers.get('content-length'))||45900000,reader=response.body.getReader(),chunks=[];let received=0;
-   while(true){const {done,value}=await reader.read();if(done)break;chunks.push(value);received+=value.length;postMessage({id,progress:'Downloading free cleanup model… '+Math.min(99,Math.round(received/total*100))+'%'});}
-   const joined=new Uint8Array(received);let at=0;for(const chunk of chunks){joined.set(chunk,at);at+=chunk.length;}bytes=joined.buffer;try{await cache?.put(modelUrl,new Response(bytes.slice(0)));}catch{}
+  let cache;try{cache=await caches.open('mooi-garment-model-v2');}catch{}
+  const chunks=[];let received=0;
+  for(const url of modelParts){let response=await cache?.match(url);if(!response){response=await fetch(url,{signal:AbortSignal.timeout(90000)});if(!response.ok)throw Error('Cleanup model download failed');try{await cache?.put(url,response.clone());}catch{}}
+   const reader=response.body.getReader();while(true){const {done,value}=await reader.read();if(done)break;chunks.push(value);received+=value.length;postMessage({id,progress:'Downloading free cleanup model… '+Math.min(99,Math.round(received/45902969*100))+'%'});}
   }
-  postMessage({id,progress:'Preparing automatic background cleanup…'});return ort.InferenceSession.create(bytes,{executionProviders:['wasm'],graphOptimizationLevel:'all'});
+  if(received!==45902969)throw Error('Cleanup model download is incomplete');const joined=new Uint8Array(received);let at=0;for(const chunk of chunks){joined.set(chunk,at);at+=chunk.length;}const bytes=joined.buffer;  postMessage({id,progress:'Preparing automatic background cleanup…'});return ort.InferenceSession.create(bytes,{executionProviders:['wasm'],graphOptimizationLevel:'all'});
  })().catch(e=>{sessionPromise=null;throw e;});return sessionPromise;
 }
 let queue=Promise.resolve();
@@ -24,4 +22,4 @@ self.onmessage=({data})=>{queue=queue.catch(()=>{}).then(async()=>{const {id,wid
  const matte=new OffscreenCanvas(mw,mh),mc=matte.getContext('2d'),frame=mc.createImageData(mw,mh);for(let i=0;i<mw*mh;i++){frame.data[i*4]=frame.data[i*4+1]=frame.data[i*4+2]=255;const alpha=(mask.data[i]-lo)/(hi-lo);frame.data[i*4+3]=alpha<.03?0:alpha>.97?255:Math.round(alpha*255);}mc.putImageData(frame,0,0);
  ctx.globalCompositeOperation='destination-in';ctx.drawImage(matte,0,0,width,height);const cutout=ctx.getImageData(0,0,width,height);postMessage({id,width,height,rgba:cutout.data.buffer},[cutout.data.buffer]);
  for(const value of Object.values(output))value.dispose();
- }catch(e){console.warn('Garment cleanup could not finish: '+e.message);postMessage({id,error:'Automatic cleanup could not finish. Try again or touch up the background.'});}});};
+ }catch(e){console.warn('Garment cleanup could not finish: '+e.message);postMessage({id,error:'Automatic cleanup could not finish: '+String(e.message).slice(0,300)});}});};
