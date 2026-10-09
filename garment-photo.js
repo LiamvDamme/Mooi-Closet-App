@@ -13,5 +13,5 @@ export async function prepareGarmentPhoto(original,progress=()=>{}){
  if(frame.data.some((v,i)=>i%4===3&&v<10))cutout=original;
  else try{const id=++serial,result=await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{jobs.delete(id);reject(Error('Cleanup took too long.'));if(!jobs.size){worker?.terminate();worker=null;}},150000);jobs.set(id,{resolve,reject,timer,progress});try{getWorker().postMessage({id,width:frame.width,height:frame.height,rgba:frame.data.buffer},[frame.data.buffer]);}catch(e){jobs.delete(id);clearTimeout(timer);reject(e);}});ctx.putImageData(new ImageData(new Uint8ClampedArray(result.rgba),result.width,result.height),0,0);cutout=canvas.toDataURL('image/png');subjectBounds(ctx.getImageData(0,0,canvas.width,canvas.height));}
  catch(error){console.warn('Background model unavailable: '+error.message);throw Error('Background cleanup did not finish. Retry or use Touch up background.');}
- progress('Enhancing and centring your piece…');return {image:await neutralGarment(cutout),cutout,original,photoTreatment:'neutral-v2'};
+ progress('Enhancing and centring your piece…');return {image:await neutralGarment(cutout),cutout,original,photoTreatment:'catalogue-v1'};
 }
