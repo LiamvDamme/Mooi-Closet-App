@@ -1,0 +1,9 @@
+# Automatic wardrobe photographs
+
+Uploaded clothing photos are processed locally in a dedicated browser worker. ONNX Runtime Web 1.21.0 (MIT, Microsoft) runs the q8 ISNet general-use model from Ko033/isnet-general-use-onnx, pinned to revision 5349b617911fd60c619b52f32e2b593517b78df3. The model card identifies the original DIS architecture and weights as Apache-2.0, by Xuebin Qin and collaborators, and the source ONNX export as rembg (MIT). Model weights download from Hugging Face and cache on the device. No uploaded photo is sent to that host. Runtime licence notices are included under assets.
+
+Sources: https://github.com/microsoft/onnxruntime/tree/v1.21.0/js/web, https://huggingface.co/Ko033/isnet-general-use-onnx, https://github.com/xuebinqin/DIS.
+
+The subject is extracted, gently sharpened without recolouring, centred and fitted into a 900×900 JPEG on #f2ede5 ivory. Original and transparent cutout are retained privately with the wardrobe item so touch-ups remain reversible. Photo-treatment metadata prevents repeated processing. Existing untreated pieces are prepared when signing in or opening Wardrobe, one at a time; original photographs remain available during processing. A failed cleanup keeps the original and marks the photo for review. Touch-up controls remain available.
+
+The CPU/WASM worker uses one thread and a 512×512 inference input to reduce mobile memory pressure. First use requires a roughly 46 MB model download plus the local 13 MB runtime. Slow, offline or unsupported browsers fall back to the existing plain-background cleanup; complicated photographs may require touch-up. No paid image-generation request or new database is involved in wardrobe-photo cleanup. Wearer photos may isolate the whole person rather than clothing; a photo of one garment laid flat or hanging gives the intended product cutout.
