@@ -1,0 +1,12 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {quickLooks,mixNotice} from '../local-stylist.js';
+import {blankState} from '../shared.js';
+const piece=(id,cat,name=id)=>({id,cat,name,colour:'Blue'});
+const wardrobe=()=>({...blankState(),items:[piece('bustier','top'),piece('tee','top'),piece('mini','bottom','Denim mini skirt'),piece('maxi','bottom','Maxi skirt'),piece('sandals','shoe'),piece('trainers','shoe')]});
+const core=(state,look)=>look.ids.filter(id=>['top','bottom','dress'].includes(state.items.find(i=>i.id===id).cat)).sort();
+test('three looks use distinct main outfits, rather than repeating a top and skirt with different shoes',()=>{const state=wardrobe();for(const random of [()=>0,()=>.99,Math.random]){const looks=quickLooks(state,{},random);assert.equal(looks.length,3);assert.equal(new Set(looks.map(o=>JSON.stringify(core(state,o)))).size,3);assert.equal(core(state,looks[0]).filter(id=>core(state,looks[1]).includes(id)).length,0);assert.ok(looks.every(o=>o.ids.some(id=>['sandals','trainers'].includes(id))));}});
+test('one main combination returns one look even with many shoes and accessories',()=>{const state=wardrobe();state.items=state.items.filter(i=>!['tee','maxi'].includes(i.id));for(let i=0;i<20;i++)state.items.push(piece('bag'+i,'bag'),piece('jewel'+i,'jewellery'));const looks=quickLooks(state,{},()=>0);assert.equal(looks.length,1);assert.match(mixNotice(looks),/Changing only shoes or accessories/);});
+test('accessories cannot exhaust enumeration before different tops and bottoms are considered',()=>{const state=wardrobe();for(let i=0;i<30;i++)state.items.push(piece('bag'+i,'bag'),piece('jewel'+i,'jewellery'));const looks=quickLooks(state,{},()=>0);assert.equal(new Set(looks.map(o=>JSON.stringify(core(state,o)))).size,3);});
+test('a locked skirt is honoured while different tops supply variety',()=>{const state=wardrobe();const looks=quickLooks(state,{clothingType:'Skirt',lockedIds:['mini']},()=>0);assert.equal(looks.length,2);assert.ok(looks.every(o=>o.ids.includes('mini')&&!o.ids.includes('maxi')));assert.equal(new Set(looks.map(o=>JSON.stringify(core(state,o)))).size,2);});
+test('a new shoe variation of a previously seen base is treated as repeated',()=>{const state=wardrobe();state.outfits=[{ids:['bustier','mini','sandals']}];const looks=quickLooks(state,{},()=>0);assert.ok(looks.every(o=>!o.repeat));assert.ok(looks.every(o=>JSON.stringify(core(state,o))!==JSON.stringify(['bustier','mini'])));});
