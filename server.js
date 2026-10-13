@@ -1,3 +1,4 @@
+import {checkCloudConnections} from './cloud-preflight.js';
 import {stylingChatRoutes} from './styling-chat-server.js';
 import {readCalendarFeed,applyCalendarFeed,calendarStatus} from './calendar-feeds.js';
 import {encryptBackup} from './backups.js';
@@ -132,4 +133,4 @@ export function createApp(options={}){
   }catch(e){if(!res.headersSent){res.removeHeader('Set-Cookie');await send(e.status||500,{error:e.status?e.message:'Something went wrong. Please retry.'});}else res.end();}
  });
 }
-if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){const port=Number(process.env.PORT||8787),storage=process.env.DATABASE_URL?await createPostgresStore(process.env.DATABASE_URL):null,app=createApp({storage});app.listen(port,process.env.PUBLIC_ORIGIN?'0.0.0.0':'127.0.0.1',()=>console.log(`Closet is ready: http://127.0.0.1:${port}\nAI: ${process.env.OPENAI_API_KEY?'configured':'add a key to .env to enable'}\nKeep this window open.`));app.on('error',e=>{console.error(e.code==='EADDRINUSE'?`Port ${port} is in use. Open the existing app or choose another PORT in .env.`:e.message);process.exitCode=1;});}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){const port=Number(process.env.PORT||8787),storage=process.env.DATABASE_URL?await createPostgresStore(process.env.DATABASE_URL):null,app=createApp({storage});app.listen(port,process.env.PUBLIC_ORIGIN?'0.0.0.0':'127.0.0.1',()=>console.log(`Closet is ready: http://127.0.0.1:${port}\nAI: ${process.env.OPENAI_API_KEY?'configured':'add a key to .env to enable'}\nKeep this window open.`));checkCloudConnections(process.env).then(result=>console.log('Staged cloud checks:',JSON.stringify(result))).catch(()=>console.log('Staged cloud checks unavailable'));app.on('error',e=>{console.error(e.code==='EADDRINUSE'?`Port ${port} is in use. Open the existing app or choose another PORT in .env.`:e.message);process.exitCode=1;});}
