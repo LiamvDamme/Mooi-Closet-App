@@ -48,3 +48,6 @@
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
 .editor-options{border-top:1px solid var(--line);margin:16px 0;padding:14px 0}.editor-options summary{cursor:pointer;font-size:13px;color:var(--muted)}.editor-options[open] summary{margin-bottom:18px}
+
+/* Champagne and espresso palette */
+:root{--bg:#f5f1eb;--paper:#fffcf7;--ink:#29231e;--muted:#756858;--line:#ded3c5;--accent:#66523d;--soft:#e9dfd1}.edit-shortcuts button:nth-child(n) span{background:#e4d7c5;color:#584634}.edit-shortcuts button:nth-child(even) span{background:#eee5d9}.overview-weather,.automatic-weather{background:#ede5d8;border-color:#ded2c0}.weather-now p{color:#6c5b48}.dock-main>span{background:#49392d}.dock-item.active{background:#e7d9c8;color:#49392d}.collection-tabs button.selected{color:#58412d;border-color:#58412d}.btn.primary:hover{background:#67523d;border-color:#67523d}.melissa-home,.subscription-pro{background:#e5d4bd}.founder-welcome{background:#eee3d4;padding:18px 46px 18px 18px;box-shadow:none;margin-bottom:18px}.founder-welcome h2{font-size:23px}.founder-welcome p:not(.eyebrow){font-size:13px;line-height:1.5}.founder-welcome .eyebrow{font-size:9px}.founder-signature{font-size:13px}.notice-friend{background:#eae5db}button:focus-visible,a:focus-visible{outline-color:#80664b}
