@@ -10,6 +10,6 @@ test('staged cloud checks are read-only and do not leak connection values',async
 });
 test('invalid configuration and upstream errors stay safe',async()=>{
  const result=await checkCloudConnections({SUPABASE_DATABASE_URL:'not-a-uri',IMAGEKIT_PRIVATE_KEY:'private_TEST',IMAGEKIT_URL_ENDPOINT:'https://untrusted.example/test'},{fetcher:()=>{throw Error('must not call');}});
- assert.match(result.supabase,/failed/);assert.match(result.imagekit,/failed/);
+ assert.match(result.supabase,/invalid URI/);assert.match(result.imagekit,/failed/);
  const rejected=await checkCloudConnections({IMAGEKIT_PRIVATE_KEY:'private_TEST',IMAGEKIT_URL_ENDPOINT:'https://ik.imagekit.io/test'},{fetcher:async()=>({ok:false,status:401})});assert.equal(rejected.imagekit,'API key rejected');
 });
