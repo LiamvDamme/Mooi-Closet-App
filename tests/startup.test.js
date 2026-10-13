@@ -18,7 +18,7 @@ for(const signedIn of [true,false])test('startup renders '+(signedIn?'remembered
  const root={innerHTML:''},modal={addEventListener(){}},calls=[];let released=false;
  const ctx={...shared,dateKey,console,AbortSignal,location:{port:''},localStorage:{getItem(){return null;}},setInterval(){},setTimeout(){},document:{querySelector:s=>s==='#root'?root:modal,addEventListener(){}},startIntro:()=>()=>{released=true;},icon:()=>'',bottomNavigation:()=>'',createWeatherWidget:()=>({html:()=>''}),createNotifications:()=>({badge(){},load:async()=>{}}),createSocial:()=>({preview:()=>'',load:async()=>{}}),createStylingChat:()=>({}),createStudio:()=>({}),fetch:async url=>{calls.push(url);let data={};if(url.endsWith('auth/me'))data={user:signedIn?{id:'test'}:null};if(url.endsWith('/state'))data={state:shared.blankState(),revision:1};return {ok:true,json:async()=>data};}};
  await vm.runInNewContext('(async()=>{'+code+'})()',ctx);
- assert.equal(released,true);assert.match(root.innerHTML,signedIn?/Hey lovely, you’re home/:/Make yourself at home/);assert.equal(calls.includes('/api/state'),signedIn);
+ assert.equal(released,true);assert.match(root.innerHTML,signedIn?/Your style\./:/Make yourself at home/);assert.equal(calls.includes('/api/state'),signedIn);
 });
 test('skip intro releases screen even before startup API finishes',()=>{
  const old={document:globalThis.document,matchMedia:globalThis.matchMedia,setTimeout:globalThis.setTimeout,clearTimeout:globalThis.clearTimeout};let click,removed=false;const root={inert:false},intro={classList:{add(){}},querySelector:()=>({addEventListener:(name,fn)=>{click=fn;}}),remove(){removed=true;}};
