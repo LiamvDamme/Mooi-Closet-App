@@ -25,7 +25,17 @@ let taggingPaused=false;
 let aiWorking=false,aiEpoch=0,draftOriginal='',draftHash='',draftCutout='',draftTreatment='',photoPreparing=false,wardrobePreparing=false,activeDraftToken=0;
 let prefs={mode:'Free wardrobe mix',clothingType:'Any clothing',colour:'Any colour',occasion:'Everyday',weather:'Automatic',anchorId:'',inspirationId:'',notes:'',images:true};
 const base=location.port==='8765'?'http://127.0.0.1:8787':'';
-async function api(path,body,method='POST'){let r;try{r=await fetch(base+'/api/'+path,{method:body===undefined?'GET':method,credentials:'include',headers:body===undefined?{}:{'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(['health','auth/me','state'].includes(path)&&body===undefined?15000:260000)});}catch{throw Error('Cannot reach MOOI. The free test server may be waking up. Wait a moment and try again.');}const d=await r.json();if(!r.ok)throw Object.assign(Error(d.error||'Please try again.'),{status:r.status});return d;}
+async function api(path,body,method='POST'){
+ const read=body===undefined;
+ for(let attempt=0;attempt<(read?2:1);attempt++){
+ let r;try{r=await fetch(base+'/api/'+path,{method:read?'GET':method,credentials:'include',headers:read?{}:{'Content-Type':'application/json'},body:read?undefined:JSON.stringify(body),signal:AbortSignal.timeout(['health','auth/me','state'].includes(path)&&read?15000:260000)});}catch{throw Error('Cannot reach MOOI. The server may be waking up. Please try again shortly.');}
+ let d;try{d=await r.json();if(!d||typeof d!=='object')throw Error('Invalid response');}catch{
+ if(read&&attempt===0&&(r.ok||r.status>=500))continue;
+ throw Object.assign(Error(read?'MOOI could not load this right now. Please try again shortly.':'The server did not confirm this action. Refresh to check whether it completed before trying again.'),{status:r.status||503});
+ }
+ if(!r.ok)throw Object.assign(Error(d.error||'MOOI could not complete this request. Please try again.'),{status:r.status});return d;
+ }
+}
 function toast(s){$('#toast').textContent=s;$('#toast').classList.remove('hidden');setTimeout(()=>$('#toast').classList.add('hidden'),4500);}
 const button=(label,action,id='',kind='')=>`<button type="button" class="btn ${kind}" data-action="${action}" data-id="${esc(id)}" ${busy?'disabled':''}>${label}</button>`;
 const options=(values,value)=>values.map(v=>`<option value="${esc(v)}" ${v===value?'selected':''}>${esc(v)}</option>`).join('');
