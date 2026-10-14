@@ -13,9 +13,11 @@ export async function createPostgresStore(connectionString, {PoolClass}={}) {
  return {
   async begin(db) {
    let unlock;const previous=tail;tail=new Promise(r=>unlock=r);await previous;
-   let client;
+   let client,connectionError;
+   const onClientError=e=>{connectionError=e;};
+   const release=()=>{if(!client)return;client.release(connectionError||undefined);client.removeListener?.('error',onClientError);};
    try {
-    client=await pool.connect();await client.query('BEGIN');
+    client=await pool.connect();client.on?.('error',onClientError);await client.query('BEGIN');
     await client.query("SET LOCAL lock_timeout = '10s'");
     const {rows}=await client.query('SELECT data FROM mooi_pilot_state WHERE id = 1 FOR UPDATE');
     if(!rows[0]?.data||!Array.isArray(rows[0].data.users))throw Error('Invalid database contents');
@@ -25,12 +27,13 @@ export async function createPostgresStore(connectionString, {PoolClass}={}) {
     return {async finish(success,dirty) {
      if(finished)return;finished=true;
      try {
+      if(connectionError)throw connectionError;
       if(success){if(dirty)await client.query('UPDATE mooi_pilot_state SET data = $1::jsonb, updated_at = now() WHERE id = 1',[JSON.stringify(db)]);await client.query('COMMIT');}
       else await client.query('ROLLBACK');
-     } catch(e){await client.query('ROLLBACK').catch(()=>{});throw Object.assign(Error('Your changes could not be saved. Please try again.'),{status:503});}
-     finally{client.release();unlock();}
+     } catch(e){connectionError=e;await client.query('ROLLBACK').catch(()=>{});throw Object.assign(Error('Your changes could not be saved. Please try again.'),{status:503});}
+     finally{release();unlock();}
     }};
-   } catch(e){if(client){await client.query('ROLLBACK').catch(()=>{});client.release();}unlock();throw Object.assign(Error('Your account database is temporarily unavailable. Please try again.'),{status:503});}
+   } catch(e){if(client){connectionError=e;await client.query('ROLLBACK').catch(()=>{});release();}unlock();throw Object.assign(Error('Your account database is temporarily unavailable. Please try again.'),{status:503});}
   },
   close:()=>pool.end()
  };
