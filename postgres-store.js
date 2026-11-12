@@ -1,17 +1,28 @@
 // Durable storage for the small MOOI pilot. A transaction serialises collection
 // updates across instances, including rolling deployments. Move large photos to
 // object storage and split records by account before scaling beyond the pilot.
+import {supabaseCA} from './supabase-ca.js';
 export async function createPostgresStore(connectionString, {PoolClass}={}) {
  // Log codes only: PostgreSQL errors can contain account data and photo payloads.
  const report=(phase,e)=>console.warn('[database]',phase,/^[A-Z0-9_]{2,32}$/.test(e?.code||'')?e.code:'CONNECTION_OR_QUERY_FAILURE');
  const retryable=e=>/^(08|40)/.test(e?.code||'')||['55P03','57P01','57P02','57P03','ECONNRESET','ECONNREFUSED','ETIMEDOUT','EPIPE'].includes(e?.code)||/connection (?:terminated|timeout)|timeout exceeded when trying to connect/i.test(e?.message||'');
  const Pool=PoolClass||(await import('pg')).default.Pool;
- const pool=new Pool({connectionString,max:2,connectionTimeoutMillis:10000});
+ let supabase=false,ssl;
+ if(connectionString!=='test'){
+  const url=new URL(connectionString);
+  supabase=url.hostname.endsWith('.supabase.com')||url.hostname.endsWith('.supabase.co');
+  if(supabase){for(const key of ['sslmode','sslcert','sslkey','sslrootcert'])url.searchParams.delete(key);connectionString=url.toString();ssl={rejectUnauthorized:true,ca:supabaseCA};}
+ }
+ const pool=new Pool({connectionString,max:2,connectionTimeoutMillis:10000,...(supabase?{ssl,options:'-c search_path=mooi_private'}:{})});
  pool.on('error',e=>report('idle',e));
  try {
+  if(supabase){
+   await pool.query('CREATE SCHEMA IF NOT EXISTS mooi_private');
+   await pool.query('REVOKE ALL ON SCHEMA mooi_private FROM PUBLIC, anon, authenticated');
+  }
   await pool.query('CREATE TABLE IF NOT EXISTS mooi_pilot_state (id integer PRIMARY KEY CHECK (id = 1), data jsonb NOT NULL, updated_at timestamptz NOT NULL DEFAULT now())');
   await pool.query('INSERT INTO mooi_pilot_state (id, data) VALUES (1, $1::jsonb) ON CONFLICT (id) DO NOTHING',[JSON.stringify({users:[],sessions:[],friendships:[],posts:[],announcements:[]})]);
- } catch(e) {await pool.end();throw Error('Cannot initialise the MOOI database. Check DATABASE_URL and database availability.');}
+ } catch(e) {report('initialise',e);await pool.end();throw Error('Cannot initialise the MOOI database. Check database configuration and availability.');}
  let tail=Promise.resolve();
  return {
   async begin(db) {
