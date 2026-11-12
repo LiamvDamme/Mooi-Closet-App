@@ -4,7 +4,7 @@
 import {supabaseCA} from './supabase-ca.js';
 export async function createPostgresStore(connectionString, {PoolClass}={}) {
  // Log codes only: PostgreSQL errors can contain account data and photo payloads.
- const report=(phase,e)=>console.warn('[database]',phase,/^[A-Z0-9_]{2,32}$/.test(e?.code||'')?e.code:'CONNECTION_OR_QUERY_FAILURE');
+ const report=(phase,e)=>console.warn('[database]',phase,/^[A-Z0-9_]{2,32}$/.test(e?.code||'')?e.code:'CONNECTION_OR_QUERY_FAILURE',/tenant or user not found/i.test(e?.message||'')?'POOLER_PROJECT_OR_USER_UNAVAILABLE':/password authentication failed/i.test(e?.message||'')?'PASSWORD_REJECTED':/timeout|timed out/i.test(e?.message||'')?'CONNECTION_TIMEOUT':/permission denied/i.test(e?.message||'')?'DATABASE_PERMISSION_DENIED':'');
  const retryable=e=>/^(08|40)/.test(e?.code||'')||['55P03','57P01','57P02','57P03','ECONNRESET','ECONNREFUSED','ETIMEDOUT','EPIPE'].includes(e?.code)||/connection (?:terminated|timeout)|timeout exceeded when trying to connect/i.test(e?.message||'');
  const Pool=PoolClass||(await import('pg')).default.Pool;
  let supabase=false,ssl;
