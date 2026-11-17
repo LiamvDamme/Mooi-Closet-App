@@ -181,3 +181,34 @@
 .insight-weather{margin-top:0}
 @media(max-width:850px){.settings-layout{grid-template-columns:minmax(0,1fr) minmax(250px,.8fr);gap:15px}.settings-side>.panel{padding:17px}.insight-summary{grid-template-columns:130px minmax(0,1fr);gap:20px;padding:23px}.insight-ring{width:128px;height:128px}.insight-summary h2{font-size:26px}.insight-pieces{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:620px){.settings-layout{grid-template-columns:minmax(0,1fr);gap:14px}.settings-main{padding:21px 17px}.settings-main .row{grid-template-columns:minmax(0,1fr);gap:0}.settings-side{gap:13px}.settings-profile-photo{max-height:300px;aspect-ratio:5/3}.profile-signout{margin-top:12px}.insight-summary{grid-template-columns:minmax(0,1fr);justify-items:center;gap:18px;padding:24px 17px;text-align:center}.insight-summary h2{font-size:25px;margin:8px 0 15px}.insight-summary .eyebrow{font-size:9px}.insight-numbers{width:100%;gap:7px}.insight-numbers>div{min-height:65px;padding:10px 6px}.insight-numbers strong{font-size:21px}.insight-numbers span{font-size:10px}.insight-summary>div>small{margin-top:10px}.insight-columns{grid-template-columns:minmax(0,1fr);gap:0}.insight-columns .insight-panel{margin:0 0 14px}.insight-panel{padding:19px 15px}.insight-panel .sectionhead h2{font-size:22px}.insight-palette{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.insight-palette>div{padding:10px}.insight-category{grid-template-columns:minmax(70px,95px) minmax(40px,1fr) 22px;gap:8px;font-size:11px}.insight-pieces{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+
+/* Social feed post hierarchy and actions */
+.feed-body{display:grid;gap:11px;padding:16px 17px 18px;background:#fbf8f2}
+.feed-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;min-width:0;padding:0 0 12px;border-bottom:1px solid #e8ded3}
+.feed-social-actions{display:flex;align-items:center;gap:17px;min-width:0}
+.feed-like{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;padding:5px 2px;color:#6c5745;font-size:13px}
+.feed-like svg{display:block;flex:0 0 24px;width:24px;height:24px}
+.feed-like.is-liked{color:#9d5d56}
+.feed-comments-toggle{padding:8px 0!important;font-size:12px;white-space:nowrap}
+.feed-try-on{flex:0 0 auto;min-height:40px;padding:10px 17px;border-radius:24px;font-size:11px;white-space:nowrap}
+.feed-caption{margin:0;color:#382b22;font:20px/1.28 Georgia,serif;font-weight:400;letter-spacing:-.15px;overflow-wrap:anywhere}
+.feed-meta{display:block;color:#8a7867;font-size:10px;line-height:1.5;letter-spacing:.2px}
+.inline-comments{display:grid;gap:10px;margin-top:3px;padding-top:12px;border-top:1px solid #eee4da}
+.comment-list{display:grid;gap:8px}
+.inline-comment{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:12px;background:#f3ece3}
+.inline-comment p{min-width:0;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.inline-comment p strong{color:#49382a;margin-right:4px}
+.inline-comment .comment-remove{flex:0 0 auto;padding:2px 4px;font-size:10px}
+.feed-comment-form{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;margin-top:1px}
+.feed-comment-form input{min-width:0;padding:11px 13px;border-radius:24px;background:#fffdf9;font-size:12px}
+.feed-comment-form .btn{padding:8px 11px;font-size:11px}
+@media(max-width:520px){.feed-body{gap:9px;padding:13px 13px 15px}.feed-actions{gap:8px;padding-bottom:10px}.feed-social-actions{gap:12px}.feed-like{gap:4px;font-size:12px}.feed-like svg{width:22px;height:22px;flex-basis:22px}.feed-comments-toggle{font-size:11px}.feed-try-on{min-height:38px;padding:9px 12px;font-size:10px}.feed-caption{font-size:18px}}
+.feed-stream{display:grid;grid-template-columns:minmax(0,760px);justify-content:center;gap:24px}
+.feed-stream .social-card{min-width:0;overflow:hidden;border:1px solid #e2d4c5;border-radius:20px;background:#fbf8f2;box-shadow:0 12px 30px #4733260b}
+.feed-author{display:flex;align-items:center;gap:11px;padding:14px 17px;background:#fbf8f2}
+.feed-author>div{display:grid;gap:2px;min-width:0}
+.feed-author strong{font-size:12px;color:#48382a}
+.feed-author small{font-size:10px;color:#8a7867;overflow-wrap:anywhere}
+.feed-stream .social-image{aspect-ratio:4/3;border-radius:0;background:#eee6dc}
+.feed-stream .social-image>img{object-fit:cover;object-position:center}
+@media(max-width:520px){.feed-stream{gap:16px}.feed-stream .social-card{border-radius:17px}.feed-author{padding:12px 13px}.feed-stream .social-image{aspect-ratio:4/4.6}}
