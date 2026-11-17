@@ -12,3 +12,52 @@
 .personal-section .style-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.style-choice{min-height:42px}.style-choice span{display:flex;align-items:center;min-height:42px;padding:9px 12px;border:1px solid #ded2c5;border-radius:12px;background:#fffdf9;font-size:12px}.style-choice:has(input:checked) span{background:#e6d8c8;border-color:#765d47;color:#3d3025}.personal-section legend{font:24px Georgia;margin-bottom:18px}.personal-section .eyebrow{margin:8px 0}.personal-section h2{font:21px Georgia;margin:22px 0 12px}.dialog .personal-photo{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.personal-photo #personal-preview:empty,.personal-photo #personal-status:empty{display:none}.personal-photo .upload{padding:10px 14px;margin:0}.generate-page .generator-form{background:#d9caba!important;border-color:#c3b19c!important;box-shadow:inset 0 1px #fff8}.generate-page .generator-form input,.generate-page .generator-form select{background:#f8f3ec}.topbar-left .brand-logo-window{cursor:pointer}.settings-main .settings-section summary{font-size:13px}.toast{z-index:1000}.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;clip:rect(0,0,0,0)!important;overflow:hidden!important}.toggle-choice[aria-pressed=true]{background:#e6d8c8;border-color:#765d47;color:#3d3025}.personal-photo .checkrow{display:none}.personal-section [data-other-entry]{display:block;margin-top:10px}.personal-section [data-other-entry][hidden]{display:none}.home-link{display:none!important}.measurements{margin:14px 0;padding:14px;border:1px solid var(--line);border-radius:12px}.measurements summary{cursor:pointer}.toast{bottom:22px;left:22px;transform:none;max-width:min(360px,calc(100vw - 44px));padding:10px 15px;border-radius:18px;animation:toast-in .18s ease-out}@keyframes toast-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 /* Darker, calmer outfit styling panel. */
 .generate-page .generator-form{background:#d9caba;border-color:#c3b19c}.generate-page .generator-form .automatic-weather{background:#d0c1af}
+
+/* Editorial welcome and membership layouts */
+.shell-v3 .brand-logo-window{width:138px!important;height:62px!important;overflow:hidden;display:block!important;position:relative;flex:0 0 138px}
+.shell-v3 .brand-logo-window img{position:absolute;width:138px!important;height:auto!important;max-width:none!important;left:0!important;top:-5px!important}
+.topbar-left{align-items:center;min-height:62px}
+.founder-welcome{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr) 38px;align-items:center;gap:18px;max-width:1500px;margin:0 auto 30px;padding:20px 24px;border:1px solid #dfcebb;border-radius:18px;background:linear-gradient(112deg,#f0e3d5 0%,#f8f4ed 68%,#eee0d0 100%);box-shadow:0 10px 28px #4935260c;color:#35281f}
+.founder-avatar{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1px solid #b79b7e;background:#e5d1bb;color:#604a38;font:17px Georgia,serif;letter-spacing:.4px}
+.founder-welcome>div{min-width:0}
+.founder-welcome .eyebrow{margin:0 0 5px;font-size:9px;letter-spacing:2px;color:#8a6b50}
+.founder-welcome h2{font:24px/1.18 Georgia,serif;letter-spacing:-.3px;margin:0 0 5px;color:#34271e}
+.founder-welcome p:not(.eyebrow){font-size:13px;line-height:1.5;color:#79685a;margin:0}
+.founder-welcome .founder-signature{display:block;margin-top:5px;color:#9a7353;font:italic 13px Georgia,serif}
+.founder-welcome .founder-dismiss{display:grid;place-items:center;width:36px;height:36px;border:1px solid #ddcbb7;border-radius:50%;background:#fff9f2;color:#725a45;transition:background .18s,transform .18s}
+.founder-welcome .founder-dismiss:hover{background:#ead9c7;transform:rotate(6deg)}
+.subscriptions-section{margin:52px auto 10px;padding:38px 0 12px;border-top:1px solid #e4d8ca}
+.subscriptions-section>.btn.primary{margin-bottom:30px}
+.subscriptions-section .sectionhead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:0 0 22px}
+.subscriptions-section .sectionhead .eyebrow{margin:0 0 8px;color:#92765d}
+.subscriptions-section .sectionhead h2{font:32px/1.15 Georgia,serif;color:#35291f}
+.subscription-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:16px}
+.subscription-card{position:relative;display:flex;flex-direction:column;min-width:0;min-height:330px;padding:25px 23px 22px;border:1px solid #dfd1c2;border-radius:17px;background:linear-gradient(150deg,#fffdf9,#f4ede4);box-shadow:0 8px 24px #4935260a;overflow:hidden}
+.subscription-card:before{content:"";position:absolute;inset:0 0 auto;height:4px;background:#b99b7d}
+.subscription-card:nth-child(2){background:linear-gradient(150deg,#fffaf6,#f1e4da)}
+.subscription-card:nth-child(2):before{background:#b78368}
+.subscription-card.subscription-pro{background:linear-gradient(145deg,#5c4738,#392b23);border-color:#5c4738;color:#fffaf5;box-shadow:0 14px 32px #35271f24}
+.subscription-card.subscription-pro:before{background:#d2af88}
+.subscription-card .eyebrow{min-height:26px;margin:0 0 10px;font-size:9px;line-height:1.5;letter-spacing:1.8px;color:#9a7d62}
+.subscription-card.subscription-pro .eyebrow{color:#ddc4a8}
+.subscription-card>h3{font:26px/1.15 Georgia,serif;font-weight:400;letter-spacing:-.4px;color:#34271e}
+.subscription-card.subscription-pro>h3{color:#fffaf5}
+.subscription-price{display:flex;align-items:baseline;gap:8px;margin:9px 0 17px;padding-bottom:17px;border-bottom:1px solid #e3d6c8;font:36px/1 Georgia,serif;color:#604a38}
+.subscription-price small{font:12px/1.4 Arial,sans-serif;color:#89796a}
+.subscription-pro .subscription-price{border-color:#ffffff2e;color:#f1dcc4}
+.subscription-pro .subscription-price small{color:#e0cebb}
+.subscription-card ul{display:grid;gap:10px;list-style:none;padding:0;margin:0 0 24px;color:#6d5b4b;font-size:12px;line-height:1.5}
+.subscription-card li{position:relative;padding-left:18px}
+.subscription-card li:before{content:"";position:absolute;left:1px;top:.48em;width:8px;height:4px;border-left:1.5px solid #a27d5c;border-bottom:1.5px solid #a27d5c;transform:rotate(-45deg)}
+.subscription-pro ul{color:#f0e4d7}
+.subscription-pro li:before{border-color:#dfbd96}
+.subscription-card>.btn{width:100%;margin-top:auto;border-radius:24px;min-height:44px;background:#fffaf5;border-color:#d9c8b6;color:#604a38}
+.subscription-card.subscription-pro>.btn.primary{background:#f2dfca;border-color:#f2dfca;color:#453226}
+.subscription-card>.btn.quiet{width:auto;align-self:center;margin:9px auto -7px;background:transparent;border:0;color:#a98666}
+.subscription-pro>.btn.quiet{color:#ecd4b9}
+.subscriptions-section>.sub{margin:16px 0 0;font-size:11px}
+.membership-checkout{color:#382c22}
+.membership-checkout .checkout-line,.membership-checkout .checkout-total{display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid #e5d9cc}
+.membership-checkout .checkout-total{border-bottom:0;font-size:15px}
+@media(max-width:760px){.subscription-grid{grid-template-columns:1fr;gap:12px}.subscription-card{min-height:0;padding:22px}.subscription-card ul{margin-bottom:18px}.founder-welcome{grid-template-columns:42px minmax(0,1fr) 34px;gap:12px;padding:16px;border-radius:15px}.founder-avatar{width:40px;height:40px}.founder-welcome h2{font-size:21px}.subscriptions-section .sectionhead h2{font-size:27px}}
+@media(max-width:420px){.shell-v3 .brand-logo-window{width:116px!important;height:54px!important;flex-basis:116px}.shell-v3 .brand-logo-window img{width:116px!important;top:-4px!important}.founder-welcome{grid-template-columns:36px minmax(0,1fr) 30px;gap:9px;padding:13px}.founder-avatar{width:35px;height:35px;font-size:14px}.founder-welcome .eyebrow{font-size:8px;letter-spacing:1.4px}.founder-welcome h2{font-size:19px}.founder-welcome p:not(.eyebrow){font-size:12px}.founder-welcome .founder-dismiss{width:30px;height:30px}}
