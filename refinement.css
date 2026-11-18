@@ -291,3 +291,5 @@
 .closet-hanger-card.is-top .closet-hanger-hook{z-index:3}
 .closet-hanger-card.is-bottom .closet-hanger-hook{z-index:3}
 @media(max-width:600px){.closet-shoe-rack:before{top:157px;height:9px}.closet-shoe-rack:after{top:166px;height:15px}.closet-shoe-photo{height:168px;padding-bottom:11px}.closet-shoe-card .closet-item-details{padding-top:15px}}
+
+.home-top-block{margin:0 0 24px}.home-greeting{margin:0 0 14px;color:#49382b;font:clamp(24px,3.1vw,34px)/1.12 Georgia,serif}.home-top-block .edit-shortcuts{margin-top:0}
