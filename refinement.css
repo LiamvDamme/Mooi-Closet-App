@@ -287,6 +287,7 @@
 .closet-shoe-photo{height:194px;padding-bottom:14px}
 .closet-shoe-card .closet-item-details{padding-top:17px}
 /* Let shirts meet the shoulder hanger at the neckline, while trouser clips show at the waist. */
-.closet-hanger-card.is-top .closet-item-photo{margin-top:-68px}\n.closet-hanger-card.is-top .closet-hanger-hook svg path:nth-of-type(n+3){display:none}
+.closet-hanger-card.is-top .closet-item-photo{margin-top:-68px}
+.closet-hanger-card.is-top .closet-hanger-hook{z-index:3}
 .closet-hanger-card.is-bottom .closet-hanger-hook{z-index:3}
 @media(max-width:600px){.closet-shoe-rack:before{top:157px;height:9px}.closet-shoe-rack:after{top:166px;height:15px}.closet-shoe-photo{height:168px;padding-bottom:11px}.closet-shoe-card .closet-item-details{padding-top:15px}}
