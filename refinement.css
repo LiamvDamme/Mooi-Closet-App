@@ -240,3 +240,19 @@
 .closet-item-actions .btn{min-width:0;padding:7px 3px;font-size:10px;white-space:nowrap}
 .closet-item-index{position:absolute;top:10px;right:12px;color:#9a8876;font-size:9px;letter-spacing:.5px}
 @media(max-width:600px){.closet-room{margin-top:15px;padding-top:18px}.closet-rail-heading{align-items:flex-start;flex-direction:column;gap:4px;margin-bottom:12px}.closet-rail-heading h2{font-size:22px}.closet-rail-heading>span{font-size:10px}.closet-scroll{margin-inline:-18px;padding:12px 18px 15px}.closet-rack{gap:12px;padding-inline:2px}.closet-hanger-card{flex-basis:168px;padding:30px 10px 10px}.closet-item-photo{height:184px;padding:7px}.closet-item-details{min-height:91px}.closet-item-details h3{font-size:16px}.closet-item-actions .btn{font-size:9px}}
+
+/* Logo and profile photo fit polish */
+.shell-v3 .topbar-left{min-width:0;max-width:none}
+.shell-v3 .brand{display:inline-flex;align-items:center;min-width:0}
+.shell-v3 .brand-logo-window{display:flex!important;align-items:center;justify-content:flex-start;width:172px!important;height:68px!important;flex:0 0 172px!important;overflow:visible!important;border-radius:0!important}
+.shell-v3 .brand-logo-window img{position:static!important;display:block;width:100%!important;height:100%!important;max-width:100%!important;object-fit:contain!important;object-position:left center!important}
+.shell-v3 .profile-chip{overflow:hidden;padding:0;background:#f4ede3}
+.shell-v3 .profile-photo{display:block;width:100%;height:100%;object-fit:cover;object-position:center 28%;border-radius:50%}
+.settings-photo-frame{position:relative;width:min(100%,300px);aspect-ratio:4/5;overflow:hidden;border:1px solid #e1d4c7;border-radius:18px;background:#eee5da}
+.settings-photo-frame .settings-profile-photo{display:block;width:100%;height:100%;max-height:none;aspect-ratio:auto;object-fit:cover;object-position:center 28%;border:0;border-radius:0}
+.settings-photo-frame>span{position:absolute;right:10px;bottom:10px;padding:6px 10px;border:1px solid #fff9;border-radius:20px;background:#fbf8f1e8;color:#685542;font-size:10px;letter-spacing:.4px}
+.settings-photo-placeholder{display:grid;place-content:center;justify-items:center;gap:10px;width:min(100%,300px);aspect-ratio:4/5;border:1px dashed #cdbba7;border-radius:18px;background:linear-gradient(145deg,#f3eadf,#e9ddcf);color:#816a53}
+.settings-photo-placeholder svg{width:36px;height:36px;stroke-width:1.2}
+.settings-photo-placeholder span{font:16px Georgia,serif}
+@media(max-width:600px){.shell-v3 .brand-logo-window{width:148px!important;height:58px!important;flex-basis:148px!important}.settings-photo-frame,.settings-photo-placeholder{width:min(100%,250px)}}
+@media(max-width:420px){.shell-v3 .brand-logo-window{width:132px!important;height:52px!important;flex-basis:132px!important}}
