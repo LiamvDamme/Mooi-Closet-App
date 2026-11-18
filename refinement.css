@@ -262,5 +262,22 @@
 .dialog .dialog-head{position:sticky;top:0;z-index:6}
 .dialog .dialog-head>button.btn.quiet{display:grid;place-items:center;width:32px;min-width:32px;height:32px;min-height:32px;padding:0;border:1px solid #d6c6b6;border-radius:50%;background:#fffdf9;color:#594635;font-size:20px;line-height:1}
 .dialog #tag-status:empty{display:none}
-/* Keep the hanger visible where it meets the garment shoulders */
-.closet-hanger-hook{z-index:3}
+/* Garments sit in front of their hangers; trousers get a taller display area. */
+.closet-hanger-hook{z-index:1}
+.closet-item-photo{z-index:2}
+.closet-hanger-card.is-bottom .closet-item-photo{height:278px}
+.closet-hanger-card.is-bottom .closet-item-photo img{object-position:center top}
+
+/* A separate, scrollable shoe shelf beneath the clothing rail. */
+.closet-shoe-room{margin:8px 0 34px;padding:22px 0 10px;border-top:1px solid #e3d7ca}
+.closet-shoe-scroll{position:relative;overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#b49a7e #e9dfd4;cursor:grab;user-select:none;padding:10px 5px 15px;-webkit-overflow-scrolling:touch}
+.closet-shoe-scroll.is-grabbable,.closet-shoe-scroll.is-dragging{cursor:grabbing}
+.closet-shoe-scroll:focus-visible{outline:2px solid #8b7158;outline-offset:3px;border-radius:15px}
+.closet-shoe-rack{--shoe-card-width:198px;position:relative;display:flex;align-items:stretch;gap:20px;width:max-content;min-width:100%;padding:0 max(10px,calc((100% - var(--shoe-card-width))/2)) 4px}
+.closet-shoe-rack:before{content:"";position:absolute;z-index:0;top:166px;left:0;right:0;height:10px;border:1px solid #694d34;border-radius:3px;background:linear-gradient(180deg,#987653,#5e432d 54%,#3f2e20);box-shadow:0 4px 7px #44301f35}
+.closet-shoe-card{position:relative;z-index:1;display:flex;flex:0 0 198px;flex-direction:column;min-width:0;padding:0 8px 12px;border:0;background:transparent;scroll-snap-align:center;transform:perspective(950px) rotateY(var(--hanger-angle,0deg)) scale(var(--hanger-scale,1));transform-origin:center bottom;backface-visibility:hidden;opacity:.84;transition:transform .24s ease,opacity .24s ease}
+.closet-shoe-card.is-centered{z-index:4;transform:perspective(950px) rotateY(0deg) scale(1.08);opacity:1}
+.closet-shoe-photo{position:relative;z-index:1;display:grid;place-items:end center;width:100%;height:170px;margin:0;padding:0 4px 10px;border:0;background:transparent;overflow:visible}
+.closet-shoe-photo img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;mix-blend-mode:multiply}
+.closet-shoe-card .closet-item-details{min-height:98px;padding-top:14px}
+@media(max-width:600px){.closet-hanger-card.is-bottom .closet-item-photo{height:242px}.closet-shoe-room{margin-top:4px;padding-top:18px}.closet-shoe-scroll{margin-inline:-18px;padding:8px 18px 14px}.closet-shoe-rack{--shoe-card-width:170px;gap:12px}.closet-shoe-rack:before{top:144px;height:9px}.closet-shoe-card{flex-basis:170px;padding-inline:5px}.closet-shoe-photo{height:148px;padding-bottom:8px}.closet-shoe-card .closet-item-details{min-height:91px;padding-top:13px}}
