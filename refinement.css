@@ -261,4 +261,7 @@
 /* Clear modal exits and proper garment hanger alignment */
 .dialog .dialog-head{position:sticky;top:0;z-index:6}
 .dialog .dialog-head>button.btn.quiet{display:grid;place-items:center;width:32px;min-width:32px;height:32px;min-height:32px;padding:0;border:1px solid #d6c6b6;border-radius:50%;background:#fffdf9;color:#594635;font-size:20px;line-height:1}
-.dialog #tag-status:empty{display:none}
+.dialog #tag-status:empty{display:none}/* Freestanding wardrobe frame around the scrolling clothes rail */
+.closet-scroll{--rack-frame-top:26px;--rack-post-height:250px;--rack-base-top:274px;background-image:linear-gradient(90deg,#24211e 0%,#766553 34%,#39322b 72%,#211e1b 100%),linear-gradient(90deg,#24211e 0%,#766553 34%,#39322b 72%,#211e1b 100%),linear-gradient(180deg,#9c8265 0%,#45392e 46%,#241f1b 100%);background-size:7px var(--rack-post-height),7px var(--rack-post-height),calc(100% - 24px) 8px;background-position:10px var(--rack-frame-top),calc(100% - 17px) var(--rack-frame-top),12px var(--rack-base-top);background-repeat:no-repeat}
+.closet-item-details{padding-top:20px}
+@media(max-width:600px){.closet-scroll{--rack-frame-top:24px;--rack-post-height:228px;--rack-base-top:252px}}
