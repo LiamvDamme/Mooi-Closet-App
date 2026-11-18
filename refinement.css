@@ -226,8 +226,7 @@
 .closet-rack:before{content:"";position:absolute;z-index:0;top:12px;left:0;right:0;height:7px;border:1px solid #967858;border-radius:8px;background:linear-gradient(180deg,#d6bb96 0%,#9b7955 48%,#75583c 100%);box-shadow:0 3px 4px #44301f30}
 .closet-hanger-card{position:relative;z-index:1;display:flex;flex:0 0 178px;flex-direction:column;align-items:stretch;min-width:0;padding:52px 7px 12px;border:0;border-radius:0;background:transparent;box-shadow:none;scroll-snap-align:center;transform:perspective(950px) rotateY(var(--hanger-angle,0deg)) scale(var(--hanger-scale,1));transform-origin:center bottom;backface-visibility:hidden;opacity:.82;transition:transform .24s ease,opacity .24s ease}
 .closet-hanger-card.is-centered{z-index:4;transform:perspective(950px) rotateY(0deg) scale(1.12);opacity:1}
-.closet-hanger-card:before{content:"";position:absolute;top:-39px;left:50%;width:1px;height:35px;background:linear-gradient(#b69b7d,#80664c);transform:translateX(-50%)}
-.closet-hanger-hook{position:absolute;z-index:2;top:-23px;left:50%;display:grid;place-items:center;width:82px;height:62px;color:#886e55;transform:translateX(-50%);filter:drop-shadow(0 2px 1px #4a352417)}
+.closet-hanger-hook{position:absolute;z-index:2;top:-44px;left:50%;display:grid;place-items:center;width:100px;height:88px;transform:translateX(-50%);filter:drop-shadow(0 2px 1px #4a352417);pointer-events:none}
 .closet-hanger-hook svg{width:100%;height:100%;overflow:visible}
 .closet-item-photo{position:relative;z-index:1;display:grid;place-items:center;width:100%;height:225px;margin-top:-44px;padding:0;border:0;border-radius:0;background:transparent;overflow:visible}
 .closet-item-photo img{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;transition:transform .25s ease}
@@ -242,7 +241,7 @@
 .closet-item-actions{display:flex;align-items:center;justify-content:space-between;gap:4px;padding-top:8px;border-top:1px solid #e8ded3}
 .closet-item-actions .btn{min-width:0;padding:7px 3px;font-size:10px;white-space:nowrap}
 .closet-item-index{display:none}
-@media(max-width:600px){.closet-room{margin-top:15px;padding-top:18px}.closet-rail-heading{align-items:flex-start;flex-direction:column;gap:4px;margin-bottom:12px}.closet-rail-heading h2{font-size:22px}.closet-rail-heading>span{font-size:10px}.closet-scroll{margin-inline:-18px;padding:12px 18px 15px}.closet-rack{--hanger-card-width:158px;gap:12px;padding-top:51px}.closet-hanger-card{flex-basis:158px;padding:48px 5px 10px}.closet-hanger-card:before{top:-39px}.closet-hanger-hook{width:76px;height:58px;top:-22px}.closet-item-photo{height:195px;margin-top:-39px;padding:0}.closet-item-details{min-height:91px}.closet-item-details h3{font-size:16px}.closet-item-actions .btn{font-size:9px}}
+@media(max-width:600px){.closet-room{margin-top:15px;padding-top:18px}.closet-rail-heading{align-items:flex-start;flex-direction:column;gap:4px;margin-bottom:12px}.closet-rail-heading h2{font-size:22px}.closet-rail-heading>span{font-size:10px}.closet-scroll{margin-inline:-18px;padding:12px 18px 15px}.closet-rack{--hanger-card-width:158px;gap:12px;padding-top:51px}.closet-hanger-card{flex-basis:158px;padding:48px 5px 10px}.closet-hanger-hook{width:94px;height:82px;top:-41px}.closet-item-photo{height:195px;margin-top:-39px;padding:0}.closet-item-details{min-height:91px}.closet-item-details h3{font-size:16px}.closet-item-actions .btn{font-size:9px}}
 
 /* Logo and profile photo fit polish */
 .shell-v3 .topbar-left{min-width:0;max-width:none}
