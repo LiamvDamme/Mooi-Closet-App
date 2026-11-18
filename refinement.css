@@ -291,15 +291,3 @@
 .closet-hanger-card.is-top .closet-hanger-hook{z-index:3}
 .closet-hanger-card.is-bottom .closet-hanger-hook{z-index:3}
 @media(max-width:600px){.closet-shoe-rack:before{top:157px;height:9px}.closet-shoe-rack:after{top:166px;height:15px}.closet-shoe-photo{height:168px;padding-bottom:11px}.closet-shoe-card .closet-item-details{padding-top:15px}}
-/* Keep the wardrobe rail visual: item descriptions stay in the edit dialog. */
-.closet-hanger-card .closet-item-details{display:none}
-.closet-hanger-card .closet-item-actions{justify-content:center;gap:10px;margin-top:0;padding:2px 0 5px;border:0}
-.closet-hanger-card .closet-item-actions .btn{display:grid;place-items:center;width:34px;height:34px;min-width:34px;padding:5px;border:1px solid #e2d3c2;border-radius:50%;background:#fbf8f2;color:#705842;font-size:0;line-height:0}
-.closet-hanger-card .closet-item-actions .btn svg{width:18px;height:18px}
-.closet-hanger-card .closet-item-actions .closet-status-action,.closet-hanger-card .closet-item-actions .closet-edit-action{font-size:0;line-height:0}
-.closet-hanger-card .closet-item-actions .closet-status-action:before,.closet-hanger-card .closet-item-actions .closet-edit-action:before{font-size:17px;line-height:1}
-.closet-hanger-card .closet-item-actions .closet-status-action:before{content:"✓"}
-.closet-hanger-card .closet-item-actions .closet-status-action.is-laundry:before{content:"⟳"}
-.closet-hanger-card .closet-item-actions .closet-edit-action:before{content:"✎"}
-.closet-hanger-card .closet-item-actions .closet-status-action.is-laundry{color:#9b7054}
-.closet-hanger-card .closet-item-actions .btn:hover{background:#eee1d2}
