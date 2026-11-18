@@ -226,7 +226,7 @@
 .closet-rack:before{content:"";position:absolute;z-index:7;top:12px;left:0;right:0;height:7px;border:1px solid #967858;border-radius:8px;background:linear-gradient(180deg,#d6bb96 0%,#9b7955 48%,#75583c 100%);box-shadow:0 3px 4px #44301f30}
 .closet-hanger-card{position:relative;z-index:1;display:flex;flex:0 0 178px;flex-direction:column;align-items:stretch;min-width:0;padding:52px 7px 12px;border:0;border-radius:0;background:transparent;box-shadow:none;scroll-snap-align:center;transform:perspective(950px) rotateY(var(--hanger-angle,0deg)) scale(var(--hanger-scale,1));transform-origin:center -39px;backface-visibility:hidden;opacity:.82;transition:transform .24s ease,opacity .24s ease}
 .closet-hanger-card.is-centered{z-index:4;transform:perspective(950px) rotateY(0deg) scale(1.12);opacity:1}
-.closet-hanger-hook{position:absolute;z-index:1;top:-50px;left:50%;display:grid;place-items:center;width:100px;height:94px;transform:translateX(-50%);filter:drop-shadow(0 2px 1px #4a352417);pointer-events:none}
+.closet-hanger-hook{position:absolute;z-index:3;top:-50px;left:50%;display:grid;place-items:center;width:100px;height:94px;transform:translateX(-50%);filter:drop-shadow(0 2px 1px #4a352417);pointer-events:none}
 .closet-hanger-hook svg{width:100%;height:100%;overflow:visible}
 .closet-item-photo{position:relative;z-index:2;display:grid;place-items:center;width:100%;height:225px;margin-top:-68px;padding:0;border:0;border-radius:0;background:transparent;overflow:visible}
 .closet-item-photo img{display:block;width:100%;height:100%;object-fit:contain;object-position:center top;mix-blend-mode:multiply;transition:filter .25s ease}
@@ -261,7 +261,6 @@
 /* Clear modal exits and proper garment hanger alignment */
 .dialog .dialog-head{position:sticky;top:0;z-index:6}
 .dialog .dialog-head>button.btn.quiet{display:grid;place-items:center;width:32px;min-width:32px;height:32px;min-height:32px;padding:0;border:1px solid #d6c6b6;border-radius:50%;background:#fffdf9;color:#594635;font-size:20px;line-height:1}
-.dialog #tag-status:empty{display:none}/* Freestanding wardrobe frame around the scrolling clothes rail */
-.closet-scroll{--rack-frame-top:26px;--rack-post-height:250px;--rack-base-top:274px;background-image:linear-gradient(90deg,#24211e 0%,#766553 34%,#39322b 72%,#211e1b 100%),linear-gradient(90deg,#24211e 0%,#766553 34%,#39322b 72%,#211e1b 100%),linear-gradient(180deg,#9c8265 0%,#45392e 46%,#241f1b 100%);background-size:7px var(--rack-post-height),7px var(--rack-post-height),calc(100% - 24px) 8px;background-position:10px var(--rack-frame-top),calc(100% - 17px) var(--rack-frame-top),12px var(--rack-base-top);background-repeat:no-repeat}
-.closet-item-details{padding-top:20px}
-@media(max-width:600px){.closet-scroll{--rack-frame-top:24px;--rack-post-height:228px;--rack-base-top:252px}}
+.dialog #tag-status:empty{display:none}
+/* Keep the hanger visible where it meets the garment shoulders */
+.closet-hanger-hook{z-index:3}
