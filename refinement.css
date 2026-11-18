@@ -212,3 +212,31 @@
 .feed-stream .social-image{aspect-ratio:4/3;border-radius:0;background:#eee6dc}
 .feed-stream .social-image>img{object-fit:cover;object-position:center}
 @media(max-width:520px){.feed-stream{gap:16px}.feed-stream .social-card{border-radius:17px}.feed-author{padding:12px 13px}.feed-stream .social-image{aspect-ratio:4/4.6}}
+
+/* A real closet rail made from the user's own wardrobe photos */
+.closet-room{margin:20px 0 28px;padding:22px 0 8px;border-top:1px solid #e3d7ca}
+.closet-rail-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:0 3px 16px}
+.closet-rail-heading .eyebrow{margin:0 0 5px;color:#94785f}
+.closet-rail-heading h2{font:25px/1.2 Georgia,serif;color:#3b2d22}
+.closet-rail-heading>span{font-size:11px;color:#897866}
+.closet-scroll{position:relative;overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#b49a7e #e9dfd4;padding:14px 5px 16px;-webkit-overflow-scrolling:touch}
+.closet-scroll:focus-visible{outline:2px solid #8b7158;outline-offset:3px;border-radius:15px}
+.closet-rack{position:relative;display:flex;align-items:stretch;gap:15px;width:max-content;min-width:100%;padding:21px 10px 4px}
+.closet-rack:before{content:"";position:absolute;z-index:0;top:12px;left:0;right:0;height:7px;border:1px solid #967858;border-radius:8px;background:linear-gradient(180deg,#d6bb96 0%,#9b7955 48%,#75583c 100%);box-shadow:0 3px 4px #44301f30}
+.closet-hanger-card{position:relative;z-index:1;display:flex;flex:0 0 190px;flex-direction:column;align-items:stretch;min-width:0;padding:31px 12px 12px;border:1px solid #e5d9cb;border-radius:17px;background:linear-gradient(160deg,#fbf8f3,#f2e9de);box-shadow:0 7px 18px #4835260b;scroll-snap-align:start}
+.closet-hanger-card:before{content:"";position:absolute;top:3px;left:50%;width:1px;height:32px;background:#a89175;transform:translateX(-50%)}
+.closet-hanger-hook{position:absolute;z-index:2;top:22px;left:50%;display:grid;place-items:center;width:30px;height:26px;color:#8b7158;transform:translateX(-50%)}
+.closet-hanger-hook svg{width:28px;height:28px;filter:drop-shadow(0 1px 0 #fff8)}
+.closet-item-photo{display:grid;place-items:center;width:100%;height:202px;margin-top:1px;padding:9px;border:1px solid #e6dbcf;border-radius:13px;background:#eee7de;overflow:hidden}
+.closet-item-photo img{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.closet-placeholder{display:grid;place-items:center;width:100%;height:100%;border-radius:9px;background:var(--item-colour);color:#6c5948;font:15px Georgia,serif;text-align:center}
+.closet-item-details{display:grid;gap:4px;min-height:98px;padding:12px 2px 7px}
+.closet-item-category{color:#94795f;font-size:9px;letter-spacing:1.6px;text-transform:uppercase}
+.closet-item-details h3{font:17px/1.25 Georgia,serif;font-weight:400;color:#3c2e23;overflow-wrap:anywhere}
+.closet-item-details p{color:#786856;font-size:11px;line-height:1.4}
+.closet-item-details>small{color:#8c7b68;font-size:10px}
+.closet-item-details .photo-review{color:#9c6652}
+.closet-item-actions{display:flex;align-items:center;justify-content:space-between;gap:4px;padding-top:8px;border-top:1px solid #e8ded3}
+.closet-item-actions .btn{min-width:0;padding:7px 3px;font-size:10px;white-space:nowrap}
+.closet-item-index{position:absolute;top:10px;right:12px;color:#9a8876;font-size:9px;letter-spacing:.5px}
+@media(max-width:600px){.closet-room{margin-top:15px;padding-top:18px}.closet-rail-heading{align-items:flex-start;flex-direction:column;gap:4px;margin-bottom:12px}.closet-rail-heading h2{font-size:22px}.closet-rail-heading>span{font-size:10px}.closet-scroll{margin-inline:-18px;padding:12px 18px 15px}.closet-rack{gap:12px;padding-inline:2px}.closet-hanger-card{flex-basis:168px;padding:30px 10px 10px}.closet-item-photo{height:184px;padding:7px}.closet-item-details{min-height:91px}.closet-item-details h3{font-size:16px}.closet-item-actions .btn{font-size:9px}}
